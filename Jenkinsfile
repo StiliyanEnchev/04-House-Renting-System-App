@@ -8,28 +8,31 @@ pipeline {
             }
         }
 
-        stage('Install dependencies') {
+        stage('Build the project') {
             steps {
-                // Example: Node.js
-                bat 'npm install'
+                bat 'dotnet build'
 
-                // Other examples:
-                // bat 'pip install -r requirements.txt'
-                // bat 'mvn install'
-                // bat 'gradlew.bat build'
             }
         }
 
         stage('Run tests') {
             steps {
-                // Example: Node.js
-                bat 'npm test'
+                bat 'dotnet test'
 
-                // Other examples:
-                // bat 'pytest'  // for Python
-                // bat 'mvn test' // for Java with Maven
-                // bat 'gradlew.bat test' // for Gradle
+
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline completed'
+        }
+        success {
+            echo 'Build succeeded'
+        }
+        failure {
+            echo 'Build failed'
         }
     }
 }
